@@ -48,7 +48,7 @@ public class DecisionTreeLearner extends AbstractDecisionTreeLearner {
 		*/
 		
 		if (examples.size() == 0) {
-			return new DecisionTree( this.pluralityVALUE(parent_examples) );
+			return new DecisionTree( this.pluralityValue(parent_examples) );
 		}
 		
 		else if (this.uniqueOutputValue(examples) != null) {
@@ -126,9 +126,8 @@ public class DecisionTreeLearner extends AbstractDecisionTreeLearner {
 		List outputValueList = new ArrayList<String>();
 		
 		//adding all output values to a list
-		Iterator iterator = examples.iterator();
-		while (iterator.hasNext()) {
-			outputValueList.add( iterator.getOutputValue() );
+		for (Example e: examples ) {
+			outputValueList.add( e.getOutputValue() );
 		}
 		
 		//finding the most common output value
@@ -136,7 +135,7 @@ public class DecisionTreeLearner extends AbstractDecisionTreeLearner {
 		String mostCommonOutput = "";
 		for( int i=0; i<outputValueList.size(); i++ ) {
 			
-			String outputValue = outputValueList.get(i);
+			String outputValue = (String) (outputValueList.get(i));
 			int currentItemFrequency = Collections.frequency(outputValueList, outputValue );
 			
 			if( currentItemFrequency > frequency ) {
@@ -159,9 +158,8 @@ public class DecisionTreeLearner extends AbstractDecisionTreeLearner {
 		List outputValueList = new ArrayList<String>();
 		
 		//adding all output values to a list
-		Iterator iterator = examples.iterator();
-		while (iterator.hasNext()) {
-			outputValueList.add( iterator.getOutputValue() );
+		for (Example e: examples ) {
+			outputValueList.add( e.getOutputValue() );
 		}
 		
 		//finding the single unique output value
@@ -169,7 +167,7 @@ public class DecisionTreeLearner extends AbstractDecisionTreeLearner {
 		String uniqueOutput = "";
 		for( int i=0; i<outputValueList.size(); i++ ) {
 			
-			String outputValue = outputValueList.get(i);
+			String outputValue = (String) (outputValueList.get(i));
 			int currentItemFrequency = Collections.frequency(outputValueList, outputValue );
 			
 			if( currentItemFrequency == 1) {
@@ -190,7 +188,7 @@ public class DecisionTreeLearner extends AbstractDecisionTreeLearner {
 	@Override
 	protected Set<Example> examplesWithValueForAttribute(Set<Example> examples, Variable a, String vk) {
 	    
-		Set<Example> subset = new Set<Example>();
+		Set<Example> subset = new HashSet<Example>();
 		
 		for (Example e : examples) {
 			if (e.getInputValue(a).equals(vk)) {
